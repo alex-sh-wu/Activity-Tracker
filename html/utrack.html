@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>UTrack</title>
+    <link rel="stylesheet" href="../css/ext/bootstrap.css"/>
+    <link rel="stylesheet" href="../css/utrack.css"/>
+</head>
+<body>
+
+<div id="app_container" class="main_container">
+    <div class="side_bar">
+        <div id="sidebar">
+            <ul>
+                <li class="header_text"><h1>UTrack</h1></li>
+                <li id="sidebar_track"><a>Track</a></li>
+                <li id="sidebar_analyze"><a>Analyze</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="track_div" class="main_content min-width-track">
+        <div class="track_wrapper">
+            <!-- Put HTML here to support user input of data -->
+            <div id="input_div" class="form-group-lg">
+                <div class="title-text"><b> Track and Analyze the Data that Matters to You!</b></div>
+                <br>
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputActivityType"
+                               class="col-sm-2 control-label content_text_large">Activity</label>
+
+                        <div class="col-sm-10">
+                            <select id="inputActivityType" class="form-control">
+                                <option>Writing Code</option>
+                                <option>Eating Dinner</option>
+                                <option>Playing Sports</option>
+                                <option>Studying for Exams</option>
+                                <option>Watching TV</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEnergyLevel" class="col-sm-2 control-label content_text_large">Energy
+                            Level</label>
+
+                        <div class="col-sm-10">
+                            <select id="inputEnergyLevel" class="form-control">
+                                <option value="1">1 (Exhausted)</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5 (Very Awake)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputStressLevel" class="col-sm-2 control-label content_text_large">Stress
+                            Level</label>
+
+                        <div class="col-sm-10">
+                            <select id="inputStressLevel" class="form-control">
+                                <option value="1">1 (Very Stressed)</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5 (Very Relaxed)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputHappinessLevel" class="col-sm-2 control-label content_text_large">Happiness
+                            Level</label>
+                        <div class="col-sm-10">
+                            <select id="inputHappinessLevel" class="form-control">
+                                <option value="1">1 (Depressed)</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5 (Very Happy)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputHappinessLevel" class="col-sm-2 control-label content_text_large">Time Spent
+                            (minutes)</label>
+                        <div class="col-sm-10">
+                            <input type="number" min="1" step="1" class="form-control" id="inputTimeSpent"
+                                   aria-describedby="inputError2Status">
+                            <span class="form-control-feedback" aria-hidden="true"></span>
+                            <span id="inputError2Status" class="sr-only">(error)</span>
+                        </div>
+
+                    </div>
+                </form>
+                <!-- Put HTML here to support user input of data -->
+                <div id="last_entry" class="content_text_medium text-center"><em> Last Data Entry: You have not made a
+                    data entry
+                    yet!</em></div>
+                <br>
+                <button id="submit_button" class="btn btn-primary center-block submit-button">Submit</button>
+            </div>
+        </div>
+    </div>
+    <!--Analysis-->
+    <div id="analysis_div" class="main_content">
+        <!-- Put HTML here to support users in analyzing their data -->
+        <div class="analysis-wrapper">
+            <div class="btn-group btn-group-justified min-width-analyze" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                    <button id="table_summary_button" type="button" class="btn btn-primary navigation-button">Table
+                        Summary
+                    </button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button id="entry_graph_button" type="button" class="btn btn-success navigation-button">
+                        Entries Comparison
+                    </button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button id="average_summary_button" type="button" class="btn btn-primary navigation-button">Activity
+                        Averages
+                    </button>
+                </div>
+            </div>
+            <br>
+            <div>
+                <table id="table_summary" class="table table-bordered min-width">
+                    <tr>
+                        <th>Entry #</th>
+                        <th>Activity</th>
+                        <th>Time Spent (minutes)</th>
+                        <th>Energy</th>
+                        <th>Stress</th>
+                        <th>Happiness</th>
+                        <th>Delete</th>
+                    </tr>
+                </table>
+            </div>
+            <div id="graph_summary">
+                <div id="scatter_plot_container" class="graph_content min-width">
+                    <canvas id="scatter_plot_graph" class="graph_content min-width">
+                        If you don't have an HTML5-compatible browser, you'll see this text.
+                        This canvas object can be removed after you understand canvas basics.
+                    </canvas>
+                </div>
+                <div id="bar_graph_container" class="graph_content min-width">
+                    <canvas id="bar_graph" class="graph_content min-width">
+                        If you don't have an HTML5-compatible browser, you'll see this text.
+                        This canvas object can be removed after you understand canvas basics.
+                    </canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="../js/ext/underscore.js"></script>
+<script src="../js/model.js"></script>
+<script src="../js/controller.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

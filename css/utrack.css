@@ -1,0 +1,127 @@
+/* Put any additional CSS here */
+html {
+    height: 100%;
+    font-family: helvetica;
+    font-weight: 100;
+    overflow-y: scroll;
+}
+
+.main_content {
+    margin-left: 150px;
+}
+
+input[type=number]:invalid {
+    background-color: #FFCCCC;
+}
+
+.content_text_large {
+    font-size: large;
+}
+
+.content_text_medium {
+    font-size: medium;
+}
+
+.header_text {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 100;
+    color: #9ACEE5;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #023146;
+}
+
+.main_container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.graph_content {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.title-text {
+    font-size: xx-large;
+    color: #34495e;
+}
+
+.track_wrapper {
+    padding-top: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-bottom: 20px;
+}
+
+.analysis-wrapper {
+    padding-top: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.submit-button {
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+}
+
+.navigation-button {
+    height: 40px;
+    font-size: 18px;
+}
+
+/*
+ Sidebar tutorial from http://www.onextrapixel.com/2013/06/24/creating-a-swipeable-side-menu-for-the-web/
+*/
+#sidebar {
+    position: fixed;
+    background: #34495e;
+    width: 150px;
+    height: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    z-index: 1000;
+}
+
+#sidebar ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#sidebar ul li {
+    margin: 0;
+}
+
+#sidebar ul li a {
+    padding: 15px 20px;
+    font-size: 16px;
+    font-weight: 100;
+    color: white;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #023146;
+    -webkit-transition: background 0.3s ease-in-out;
+    -moz-transition: background 0.3s ease-in-out;
+    -ms-transition: background 0.3s ease-in-out;
+    -o-transition: background 0.3s ease-in-out;
+    transition: background 0.3s ease-in-out;
+}
+
+#sidebar ul li:hover a {
+    background: #27ae60;
+}
+
+/*
+ Sidebar tutorial from http://www.onextrapixel.com/2013/06/24/creating-a-swipeable-side-menu-for-the-web/
+*/
+.min-width-analyze {
+    min-width: 650px;
+}
+
+.min-width-track {
+    min-width: 480px;
+}
