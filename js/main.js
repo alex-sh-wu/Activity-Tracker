@@ -4,6 +4,7 @@ let dataModel;
 let graphModel;
 
 window.addEventListener('load', () => {
+    //TODO: change dataModel and graphModel to not be global variables
     dataModel = new ActivityStoreModel();
     graphModel = new GraphModel();
 
@@ -50,12 +51,12 @@ window.addEventListener('load', () => {
 
     dataModel.addListener((eventType, eventTime, activityData) => {
         renderTableSummary(tableContainer, dataModel);
-        renderActivityAverages(activityAverages);
-        renderEntryByEntryComparison(entriesComparison);
+        renderActivityAverages(activityAverages, dataModel);
+        renderEntryByEntryComparison(entriesComparison, dataModel);
     });
 
     graphModel.addListener((eventType, eventTime, graphName) => {
-        updateGraphs(graphName, tableSummary, graphSummary, entriesComparison, activityAverages);
+        updateGraphs(graphModel, graphName, tableSummary, graphSummary, entriesComparison, activityAverages);
     })
 
     
@@ -96,6 +97,6 @@ window.addEventListener('load', () => {
 
     //information rendering
     renderTableSummary(tableContainer, dataModel);
-    renderActivityAverages(activityAverages);
-    renderEntryByEntryComparison(entriesComparison);
+    renderActivityAverages(activityAverages, dataModel);
+    renderEntryByEntryComparison(entriesComparison, dataModel);
 });

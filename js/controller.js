@@ -55,7 +55,7 @@ function renderTableSummary (tableElement, dataModel) {
     }
 }
 
-function updateGraphs(graphName, tableSummary, graphSummary, entriesComparison, activityAverages) {
+function updateGraphs(graphModel, graphName, tableSummary, graphSummary, entriesComparison, activityAverages) {
     if (graphName.valueOf() == graphModel.getAvailableGraphNames()[0].valueOf()) {
         showTableSummary(tableSummary, graphSummary);
     }
@@ -147,7 +147,7 @@ function renderScatterPlot () {
  * This function can live outside the window load event handler, because it is
  * only called in response to a button click event
  */
-function renderActivityAverages(canvas) {
+function renderActivityAverages(canvas, dataModel) {
     var context = canvas.getContext('2d');
     var horizontalSpacing = 10;
     var leftMargin = 75;
@@ -265,7 +265,7 @@ function renderActivityAverages(canvas) {
     });
 }
 
-function renderEntryByEntryComparison(canvas) {
+function renderEntryByEntryComparison(canvas, dataModel) {
     var context = canvas.getContext('2d');
     var horizontalSpacing = 10;
     var leftMargin = 75;
