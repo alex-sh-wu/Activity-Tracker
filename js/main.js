@@ -27,25 +27,25 @@ window.addEventListener('load', () => {
     activityAverages.style.display = 'none';
     entriesComparison.style.display = 'none';
 
-    document.getElementById('sidebar_track').addEventListener('click', function () {
+    document.getElementById('sidebar_track').addEventListener('click', () => {
         trackDiv.style.display = 'block';
         analyzeDiv.style.display = 'none';
     });
 
-    document.getElementById('sidebar_analyze').addEventListener('click', function () {
+    document.getElementById('sidebar_analyze').addEventListener('click', () => {
         trackDiv.style.display = 'none';
         analyzeDiv.style.display = 'block';
     });
 
-    document.getElementById('table_summary_button').addEventListener('click', function () {
+    document.getElementById('table_summary_button').addEventListener('click', () => {
         graphModel.selectGraph(graphModel.getAvailableGraphNames()[0]);
     });
 
-    document.getElementById('entry_graph_button').addEventListener('click', function () {
+    document.getElementById('entry_graph_button').addEventListener('click', () => {
         graphModel.selectGraph(graphModel.getAvailableGraphNames()[1]);
     });
 
-    document.getElementById('average_summary_button').addEventListener('click', function () {
+    document.getElementById('average_summary_button').addEventListener('click', () => {
         graphModel.selectGraph(graphModel.getAvailableGraphNames()[2]);
     });
 
