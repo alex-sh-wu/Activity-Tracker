@@ -77,7 +77,7 @@ window.addEventListener('load', () => {
             return;
         }
 
-        var activityDataPoint = new ActivityData(
+        let activityDataPoint = new ActivityData(
             activityField.value,
             {
                 energyLevel: parseInt(energyField.value),

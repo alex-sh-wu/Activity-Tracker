@@ -1,11 +1,12 @@
 'use strict';
 
-var ACTIVITY_DATA_ADDED_EVENT = 'ACTIVITY_DATA_ADDED_EVENT';
-var ACTIVITY_DATA_REMOVED_EVENT = 'ACTIVITY_DATA_REMOVED_EVENT';
+const ACTIVITY_DATA_ADDED_EVENT = 'ACTIVITY_DATA_ADDED_EVENT';
+const ACTIVITY_DATA_REMOVED_EVENT = 'ACTIVITY_DATA_REMOVED_EVENT';
 
-var GRAPH_SELECTED_EVENT = 'GRAPH_SELECTED_EVENT';
-var STORAGE_KEY_DATA_POINTS = 'STORAGE_KEY_DATA_POINTS';
-var STORAGE_KEY_LAST_DATA_ENTRY_TIME = 'STORAGE_KEY_LAST_DATA_ENTRY_TIME';
+const GRAPH_SELECTED_EVENT = 'GRAPH_SELECTED_EVENT';
+const STORAGE_KEY_DATA_POINTS = 'STORAGE_KEY_DATA_POINTS';
+const STORAGE_KEY_LAST_DATA_ENTRY_TIME = 'STORAGE_KEY_LAST_DATA_ENTRY_TIME';
+
 /**
  * Represents a single activity data point.
  * @param activityType The type of activity. A string
@@ -16,7 +17,7 @@ var STORAGE_KEY_LAST_DATA_ENTRY_TIME = 'STORAGE_KEY_LAST_DATA_ENTRY_TIME';
  * @param date The time this was recorded
  * @constructor
  */
-var ActivityData = function (activityType, healthMetricsDict, activityDurationInMinutes, fake = false) {
+let ActivityData = function (activityType, healthMetricsDict, activityDurationInMinutes, fake = false) {
     this.activityType = activityType;
     this.activityDataDict = healthMetricsDict;
     this.activityDurationInMinutes = activityDurationInMinutes;
@@ -29,7 +30,7 @@ var ActivityData = function (activityType, healthMetricsDict, activityDurationIn
  * An object which tracks all of the data
  * @constructor
  */
-var ActivityStoreModel = function () {
+let ActivityStoreModel = function () {
     this.listenerList = [];
     this.dataPointList = [];
     this.trackedActivitiesList = ["Writing Code", "Eating Dinner", "Playing Sports", "Studying for Exams", "Watching TV"];
@@ -59,7 +60,7 @@ _.extend(ActivityStoreModel.prototype, {
      */
     removeListener: function (listener) {
         // TODO
-        var index = this.listenerList.indexOf(listener);
+        let index = this.listenerList.indexOf(listener);
         if (index >= 0) {
             this.listenerList.splice(index, 1);
         }
@@ -72,11 +73,11 @@ _.extend(ActivityStoreModel.prototype, {
      */
     addActivityDataPoint: function (activityDataPoint) {
         // TODO
-        var activityText = activityDataPoint.activityType;
-        var happiness = activityDataPoint.activityDataDict.happinessLevel;
-        var energy = activityDataPoint.activityDataDict.energyLevel;
-        var stress = activityDataPoint.activityDataDict.stressLevel;
-        var timeSpent = activityDataPoint.activityDurationInMinutes;
+        let activityText = activityDataPoint.activityType;
+        let happiness = activityDataPoint.activityDataDict.happinessLevel;
+        let energy = activityDataPoint.activityDataDict.energyLevel;
+        let stress = activityDataPoint.activityDataDict.stressLevel;
+        let timeSpent = activityDataPoint.activityDurationInMinutes;
         if (_.isNaN(happiness) || _.isNaN(energy)
             || _.isNaN(stress) || _.isNaN(timeSpent)
             || !_.isNumber(happiness) || !_.isNumber(energy)
@@ -110,8 +111,8 @@ _.extend(ActivityStoreModel.prototype, {
      * @param activityDataPoint
      */
     removeActivityDataPoint: function (activityDataPoint) {
-        var data = JSON.stringify(activityDataPoint);
-        var index = this.dataPointList.indexOf(data);
+        let data = JSON.stringify(activityDataPoint);
+        let index = this.dataPointList.indexOf(data);
         if (index >= 0) {
             this.dataPointList.splice(index, 1);
             window.localStorage.setItem(STORAGE_KEY_DATA_POINTS,
@@ -148,7 +149,7 @@ _.extend(ActivityStoreModel.prototype, {
  * necessary to configure that graph.
  * @constructor
  */
-var GraphModel = function () {
+let GraphModel = function () {
     this.listenerList = [];
     this.graphNameList = ["TableSummary", "EntryByEntry", "Averages"];
     this.selectedGraphName = "TableSummary";
@@ -174,7 +175,7 @@ _.extend(GraphModel.prototype, {
      */
     removeListener: function (listener) {
         // TODO
-        var index = this.listenerList.indexOf(listener);
+        let index = this.listenerList.indexOf(listener);
         if (index >= 0) {
             this.listenerList.splice(index, 1);
         }
@@ -239,7 +240,7 @@ function generateFakeData(activityModel, numDataPointsToGenerate) {
     _.times(
         numDataPointsToGenerate,
         function () {
-            var activityDataPoint = new ActivityData(
+            let activityDataPoint = new ActivityData(
                 activityModel.trackedActivitiesList[_.random(activityModel.trackedActivitiesList.length - 1)],
                 {
                     energyLevel: _.random(1, 5),

@@ -43,7 +43,7 @@ function renderTableSummary (tableElement, dataModel) {
         happiness.innerHTML = dataPoints[i]["activityDataDict"]["happinessLevel"];
         let deleteCell = row.insertCell();
 
-        var button = document.createElement('input');
+        let button = document.createElement('input');
         button.setAttribute('type', 'button');
         button.setAttribute('name', 'X');
         button.setAttribute('value', 'X');
@@ -91,7 +91,7 @@ function showActivityAverages(tableSummary, graphSummary, entriesComparison, act
 /*
 function responsivefy(svg) {
     // get container + svg aspect ratio
-    var container = d3.select(svg.node().parentNode),
+    let container = d3.select(svg.node().parentNode),
         width = parseInt(svg.style("width")),
         height = parseInt(svg.style("height")),
         aspect = width / height;
@@ -110,21 +110,21 @@ function responsivefy(svg) {
 
     // get width of container and resize svg to fit it
     function resize() {
-        var targetWidth = parseInt(container.style("width"));
+        let targetWidth = parseInt(container.style("width"));
         svg.attr("width", targetWidth);
         svg.attr("height", Math.round(targetWidth / aspect));
     }
 }
 
 function renderScatterPlot () {
-    var svg = d3.select("#scatter_plot_container")
+    let svg = d3.select("#scatter_plot_container")
         .append("div")
         .append("svg")
         .attr("width", 960)
         .attr("height", 500)
         .call(responsivefy);
 
-    var dataSet = [
+    let dataSet = [
                             [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
                             [410, 12], [475, 44], [25, 67], [85, 21], [220, 88]
                           ];
@@ -148,26 +148,26 @@ function renderScatterPlot () {
  * only called in response to a button click event
  */
 function renderActivityAverages(canvas, dataModel) {
-    var context = canvas.getContext('2d');
-    var horizontalSpacing = 10;
-    var leftMargin = 75;
-    var labelMargin = 25;
+    let context = canvas.getContext('2d');
+    let horizontalSpacing = 10;
+    let leftMargin = 75;
+    let labelMargin = 25;
     canvas.width = screen.availWidth / 1.25 + leftMargin;
     canvas.height = screen.availHeight / 1.25;
-    var bottomMargin = screen.availHeight - canvas.height;
-    var heightDivider = 7;
-    var maxYValue = 5;
+    let bottomMargin = screen.availHeight - canvas.height;
+    let heightDivider = 7;
+    let maxYValue = 5;
 
-    var width = canvas.width - leftMargin;
-    var height = canvas.height - bottomMargin - labelMargin;
+    let width = canvas.width - leftMargin;
+    let height = canvas.height - bottomMargin - labelMargin;
 
-    var activityNames = dataModel.getTrackedActivitiesList();
+    let activityNames = dataModel.getTrackedActivitiesList();
 
-    var groupBarWidth = (width / activityNames.length);
+    let groupBarWidth = (width / activityNames.length);
 
-    var indivBarWidth = ( groupBarWidth - (horizontalSpacing * 2)) / 3;
+    let indivBarWidth = ( groupBarWidth - (horizontalSpacing * 2)) / 3;
 
-    var maxBarHeight = height / heightDivider;
+    let maxBarHeight = height / heightDivider;
 
     //Set up graph axis
     context.font = "25px Arial";
@@ -189,7 +189,7 @@ function renderActivityAverages(canvas, dataModel) {
     context.lineTo(leftMargin, canvas.height - bottomMargin - labelMargin);
     context.stroke();
 
-    var i;
+    let i;
     //Y Axis data Points
     for (i = heightDivider - maxYValue; i <= heightDivider - 1; i++) {
         context.font = "16px Arial";
@@ -227,9 +227,9 @@ function renderActivityAverages(canvas, dataModel) {
         return s1.localeCompare(s2);
     });
 
-    var index = 0;
+    let index = 0;
     _.each(activityNames, function (activityName) {
-        var x = leftMargin + index * groupBarWidth + horizontalSpacing;
+        let x = leftMargin + index * groupBarWidth + horizontalSpacing;
 
         context.save();
         context.translate(x + groupBarWidth / 2, height + bottomMargin / 2);
@@ -238,10 +238,10 @@ function renderActivityAverages(canvas, dataModel) {
         context.font = "18px Arial";
         context.fillText(activityName, 0, 0, bottomMargin - labelMargin);
         context.restore();
-        var energyLevelTotal = 0;
-        var stressLevelTotal = 0;
-        var happinesLevelTotal = 0;
-        var dataPoints = _.filter(dataModel.getActivityDataPoints(), function (dataPoint) {
+        let energyLevelTotal = 0;
+        let stressLevelTotal = 0;
+        let happinesLevelTotal = 0;
+        let dataPoints = _.filter(dataModel.getActivityDataPoints(), function (dataPoint) {
             return dataPoint.activityType.valueOf() == activityName.valueOf();
         });
 
@@ -266,29 +266,29 @@ function renderActivityAverages(canvas, dataModel) {
 }
 
 function renderEntryByEntryComparison(canvas, dataModel) {
-    var context = canvas.getContext('2d');
-    var horizontalSpacing = 10;
-    var leftMargin = 75;
-    var labelMargin = 25;
+    let context = canvas.getContext('2d');
+    let horizontalSpacing = 10;
+    let leftMargin = 75;
+    let labelMargin = 25;
     canvas.width = screen.availWidth / 1.25 + leftMargin;
     canvas.height = screen.availHeight / 1.25;
-    var bottomMargin = screen.availHeight - canvas.height;
-    var heightDivider = 7;
-    var maxYValue = 5;
+    let bottomMargin = screen.availHeight - canvas.height;
+    let heightDivider = 7;
+    let maxYValue = 5;
 
-    var width = canvas.width - leftMargin;
-    var height = canvas.height - bottomMargin - labelMargin;
+    let width = canvas.width - leftMargin;
+    let height = canvas.height - bottomMargin - labelMargin;
 
-    var dataPoints = dataModel.getActivityDataPoints();
+    let dataPoints = dataModel.getActivityDataPoints();
 
-    var groupBarWidth = (width / dataPoints.length);
+    let groupBarWidth = (width / dataPoints.length);
     if (dataPoints.length <= 7) {
         groupBarWidth = 100;
     }
 
-    var indivBarWidth = ( groupBarWidth - (horizontalSpacing * 2)) / 3;
+    let indivBarWidth = ( groupBarWidth - (horizontalSpacing * 2)) / 3;
 
-    var maxBarHeight = height / heightDivider;
+    let maxBarHeight = height / heightDivider;
 
     //Set up graph axis
     context.font = "25px Arial";
@@ -340,7 +340,7 @@ function renderEntryByEntryComparison(canvas, dataModel) {
     context.fillRect(canvas.width - leftMargin * 2, 60, 10, 10);
 
 
-    var i;
+    let i;
     //Y Axis data Points
     for (i = heightDivider - maxYValue; i <= heightDivider - 1; i++) {
         context.font = "16px Arial";
@@ -349,9 +349,9 @@ function renderEntryByEntryComparison(canvas, dataModel) {
         context.fillRect(leftMargin, (maxBarHeight * i), -5, 2);
     }
 
-    var index = 0;
+    let index = 0;
     _.each(dataPoints, function (dataPoint) {
-        var x = leftMargin + index * groupBarWidth + horizontalSpacing;
+        let x = leftMargin + index * groupBarWidth + horizontalSpacing;
 
         context.save();
         context.translate(x + groupBarWidth / 2, height + bottomMargin / 2);
@@ -361,7 +361,7 @@ function renderEntryByEntryComparison(canvas, dataModel) {
         context.fillText(index + 1 + " - " + dataPoint.activityType, 0, 0, bottomMargin - labelMargin);
         context.restore();
 
-        var dictionary = dataPoint.activityDataDict;
+        let dictionary = dataPoint.activityDataDict;
         context.fillStyle = energyColor;
         context.fillRect(x, height, indivBarWidth, -1 * dictionary.energyLevel * maxBarHeight);
         x += indivBarWidth;
