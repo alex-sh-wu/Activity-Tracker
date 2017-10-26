@@ -1,5 +1,9 @@
 'use strict';
 
+const energyColor = '#FAA43A';
+const stressColor = '#F15854';
+const happinessColor = '#5DA5DA';
+
 function getLastUpdateTime(newTime) {
     let date = null;
     if (newTime != null) {
@@ -212,11 +216,11 @@ function renderActivityAverages(canvas) {
     context.fillText("Stress", canvas.width - leftMargin, 50);
     context.fillText("Happiness", canvas.width - leftMargin, 70);
 
-    context.fillStyle = '#F17CB0';
+    context.fillStyle = energyColor;
     context.fillRect(canvas.width - leftMargin * 2, 20, 10, 10);
-    context.fillStyle = '#4D4D4D';
+    context.fillStyle = stressColor;
     context.fillRect(canvas.width - leftMargin * 2, 40, 10, 10);
-    context.fillStyle = '#60BD68';
+    context.fillStyle = happinessColor;
     context.fillRect(canvas.width - leftMargin * 2, 60, 10, 10);
 
     activityNames.sort(function (s1, s2) {
@@ -247,15 +251,15 @@ function renderActivityAverages(canvas) {
             happinesLevelTotal += dataPoint.activityDataDict.happinessLevel;
         });
 
-        context.fillStyle = '#F17CB0';
+        context.fillStyle = energyColor;
         context.fillRect(x, height, indivBarWidth, -1 * energyLevelTotal / dataPoints.length * maxBarHeight);
         x += indivBarWidth;
 
-        context.fillStyle = '#4D4D4D';
+        context.fillStyle = stressColor;
         context.fillRect(x, height, indivBarWidth, -1 * stressLevelTotal / dataPoints.length * maxBarHeight);
         x += indivBarWidth;
 
-        context.fillStyle = '#60BD68';
+        context.fillStyle = happinessColor;
         context.fillRect(x, height, indivBarWidth, -1 * happinesLevelTotal / dataPoints.length * maxBarHeight);
         index += 1;
     });
@@ -328,11 +332,11 @@ function renderEntryByEntryComparison(canvas) {
     context.fillText("Stress", canvas.width - leftMargin, 50);
     context.fillText("Happiness", canvas.width - leftMargin, 70);
 
-    context.fillStyle = '#FAA43A';
+    context.fillStyle = energyColor;
     context.fillRect(canvas.width - leftMargin * 2, 20, 10, 10);
-    context.fillStyle = '#F15854 ';
+    context.fillStyle = stressColor;
     context.fillRect(canvas.width - leftMargin * 2, 40, 10, 10);
-    context.fillStyle = '#5DA5DA ';
+    context.fillStyle = happinessColor;
     context.fillRect(canvas.width - leftMargin * 2, 60, 10, 10);
 
 
@@ -358,15 +362,15 @@ function renderEntryByEntryComparison(canvas) {
         context.restore();
 
         var dictionary = dataPoint.activityDataDict;
-        context.fillStyle = '#FAA43A';
+        context.fillStyle = energyColor;
         context.fillRect(x, height, indivBarWidth, -1 * dictionary.energyLevel * maxBarHeight);
         x += indivBarWidth;
 
-        context.fillStyle = '#F15854';
+        context.fillStyle = stressColor;
         context.fillRect(x, height, indivBarWidth, -1 * dictionary.stressLevel * maxBarHeight);
         x += indivBarWidth;
 
-        context.fillStyle = '#5DA5DA';
+        context.fillStyle = happinessColor;
         context.fillRect(x, height, indivBarWidth, -1 * dictionary.happinessLevel * maxBarHeight);
         index += 1;
     });
