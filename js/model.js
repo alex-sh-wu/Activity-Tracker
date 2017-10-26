@@ -16,10 +16,13 @@ var STORAGE_KEY_LAST_DATA_ENTRY_TIME = 'STORAGE_KEY_LAST_DATA_ENTRY_TIME';
  * @param date The time this was recorded
  * @constructor
  */
-var ActivityData = function (activityType, healthMetricsDict, activityDurationInMinutes) {
+var ActivityData = function (activityType, healthMetricsDict, activityDurationInMinutes, fake = false) {
     this.activityType = activityType;
     this.activityDataDict = healthMetricsDict;
     this.activityDurationInMinutes = activityDurationInMinutes;
+    if (fake) {
+        this.fake = true; //to indicate fake data
+    }
 };
 
 /**
@@ -243,7 +246,8 @@ function generateFakeData(activityModel, numDataPointsToGenerate) {
                     stressLevel: _.random(1, 5),
                     happinessLevel: _.random(1, 5)
                 },
-                _.random(60)
+                _.random(300),
+                true
             );
             activityModel.addActivityDataPoint(activityDataPoint);
         }

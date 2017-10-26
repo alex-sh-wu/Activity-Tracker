@@ -124,8 +124,8 @@
                 </div>
             </div>
             <br>
-            <div>
-                <table id="table_summary" class="table table-bordered min-width">
+            <div id="table_summary">
+                <table id="activity_table_container" class="table table-bordered min-width">
                     <tr>
                         <th>Entry #</th>
                         <th>Activity</th>
@@ -138,24 +138,25 @@
                 </table>
             </div>
             <div id="graph_summary">
-                <div id="scatter_plot_container" class="graph_content min-width">
-                    <canvas id="scatter_plot_graph" class="graph_content min-width">
-                        If you don't have an HTML5-compatible browser, you'll see this text.
-                        This canvas object can be removed after you understand canvas basics.
+                <div id="entries_container" class="graph_content min-width">
+                    <canvas id="entries_graph" class="graph_content min-width">
                     </canvas>
                 </div>
                 <div id="bar_graph_container" class="graph_content min-width">
                     <canvas id="bar_graph" class="graph_content min-width">
-                        If you don't have an HTML5-compatible browser, you'll see this text.
-                        This canvas object can be removed after you understand canvas basics.
                     </canvas>
                 </div>
             </div>
         </div>
-
+    </div>
+    <div class="main_content text-center min-width-track">
+        <div class="track_wrapper">
+            <button id="generate_button" class="btn btn-info">Generate Random Points</button>
+        </div>
     </div>
 </div>
 <script src="../js/ext/underscore.js"></script>
+<script src="../js/ext/d3.min.js"></script>
 <script src="../js/model.js"></script>
 <script src="../js/controller.js"></script>
 <script src="../js/main.js"></script>

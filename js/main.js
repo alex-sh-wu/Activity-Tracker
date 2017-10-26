@@ -18,10 +18,13 @@ window.addEventListener('load', () => {
     let analyzeDiv = document.getElementById('analysis_div');
     let tableSummary = document.getElementById('table_summary');
     let graphSummary = document.getElementById('graph_summary');
+    let entriesComparison = document.getElementById('entries_graph');
+    let activityAverages = document.getElementById('bar_graph');
+    let tableContainer = document.getElementById('activity_table_container');
 
     analyzeDiv.style.display = 'none';
-    document.getElementById('bar_graph_container').style.display = 'none';
-    document.getElementById('scatter_plot_container').style.display = 'none';
+    activityAverages.style.display = 'none';
+    entriesComparison.style.display = 'none';
 
     document.getElementById('sidebar_track').addEventListener('click', function () {
         trackDiv.style.display = 'block';
@@ -45,9 +48,18 @@ window.addEventListener('load', () => {
         graphModel.selectGraph(graphModel.getAvailableGraphNames()[2]);
     });
 
-    dataModel.addListener(function (eventType, eventTime, activityData) {
-        renderTableSummary(tableSummary, dataModel);
+    dataModel.addListener((eventType, eventTime, activityData) => {
+        renderTableSummary(tableContainer, dataModel);
+        renderActivityAverages(activityAverages);
+        renderEntryByEntryComparison(entriesComparison);
     });
+
+    graphModel.addListener((eventType, eventTime, graphName) => {
+        updateGraphs(graphName, tableSummary, graphSummary, entriesComparison, activityAverages);
+    })
+
+    
+    //entering information into the graph
 
     let activityField = document.getElementById("inputActivityType");
     let energyField = document.getElementById("inputEnergyLevel");
@@ -77,5 +89,13 @@ window.addEventListener('load', () => {
         resetFormField (activityField, energyField, stressField, happinessField, timeSpentField);
     });
 
-    renderTableSummary(tableSummary, dataModel);
+    let generateButton = document.getElementById("generate_button");
+    generateButton.addEventListener('click', () => {
+        generateFakeData(dataModel, 5);
+    });
+
+    //information rendering
+    renderTableSummary(tableContainer, dataModel);
+    renderActivityAverages(activityAverages);
+    renderEntryByEntryComparison(entriesComparison);
 });
