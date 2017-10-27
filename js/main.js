@@ -9,10 +9,13 @@ window.addEventListener('load', () => {
     graphModel = new GraphModel();
 
     let storedData = window.localStorage.getItem(STORAGE_KEY_DATA_POINTS);
-    let storedLastUpdateTime = parseInt(window.localStorage.getItem(STORAGE_KEY_LAST_DATA_ENTRY_TIME));
-    getLastUpdateTime(storedLastUpdateTime);
+    let storedLastUpdateTime = window.localStorage.getItem(STORAGE_KEY_LAST_DATA_ENTRY_TIME);
+    getLastUpdateTime(parseInt(storedLastUpdateTime));
     if (storedData != null) {
         dataModel.dataPointList = JSON.parse(storedData);
+    }
+    if (storedLastUpdateTime != null) {
+        dataModel.mostRecentAddedDate = storedLastUpdateTime;
     }
 
     let trackDiv = document.getElementById('track_div');
