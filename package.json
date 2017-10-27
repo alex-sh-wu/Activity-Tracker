@@ -1,0 +1,8 @@
+{
+  "name": "uTrack",
+  "version": "0.10",
+  "main": "main.js",
+  "dependencies": {
+    "electron": "1.7.9"
+  }
+}
