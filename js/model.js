@@ -238,7 +238,7 @@ function generateFakeData(activityModel, numDataPointsToGenerate) {
                     stressLevel: _.random(1, 5),
                     happinessLevel: _.random(1, 5)
                 },
-                _.random(300),
+                _.random(299) + 1,
                 true
             );
             activityModel.addActivityDataPoint(activityDataPoint);
