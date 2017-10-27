@@ -1,12 +1,8 @@
 'use strict';
 
-let dataModel;
-let graphModel;
-
 window.addEventListener('load', () => {
-    //TODO: change dataModel and graphModel to not be global variables
-    dataModel = new ActivityStoreModel();
-    graphModel = new GraphModel();
+    let dataModel = new ActivityStoreModel();
+    let graphModel = new GraphModel();
 
     let storedData = window.localStorage.getItem(STORAGE_KEY_DATA_POINTS);
     let storedLastUpdateTime = window.localStorage.getItem(STORAGE_KEY_LAST_DATA_ENTRY_TIME);

@@ -50,7 +50,6 @@ _.extend(ActivityStoreModel.prototype, {
      * activityData the ActivityData added or removed.
      */
     addListener: function (listener) {
-        // TODO
         this.listenerList.push(listener);
     },
 
@@ -59,7 +58,6 @@ _.extend(ActivityStoreModel.prototype, {
      * @param listener
      */
     removeListener: function (listener) {
-        // TODO
         let index = this.listenerList.indexOf(listener);
         if (index >= 0) {
             this.listenerList.splice(index, 1);
@@ -72,7 +70,6 @@ _.extend(ActivityStoreModel.prototype, {
      * @param activityDataPoint
      */
     addActivityDataPoint: function (activityDataPoint) {
-        // TODO
         let activityText = activityDataPoint.activityType;
         let happiness = activityDataPoint.activityDataDict.happinessLevel;
         let energy = activityDataPoint.activityDataDict.energyLevel;
@@ -125,7 +122,6 @@ _.extend(ActivityStoreModel.prototype, {
      * Should return an array of all activity data points
      */
     getActivityDataPoints: function () {
-        // TODO
         return _.map(this.dataPointList, function (dataPointString) {
             return JSON.parse(dataPointString);
         });
@@ -165,7 +161,6 @@ _.extend(GraphModel.prototype, {
      * and eventData indicates the name of the new graph.
      */
     addListener: function (listener) {
-        // TODO
         this.listenerList.push(listener);
     },
 
@@ -174,7 +169,6 @@ _.extend(GraphModel.prototype, {
      * @param listener
      */
     removeListener: function (listener) {
-        // TODO
         let index = this.listenerList.indexOf(listener);
         if (index >= 0) {
             this.listenerList.splice(index, 1);
@@ -185,7 +179,6 @@ _.extend(GraphModel.prototype, {
      * Returns a list of graphs (strings) that can be selected by the user
      */
     getAvailableGraphNames: function () {
-        // TODO
         return this.graphNameList;
     },
 
@@ -194,7 +187,6 @@ _.extend(GraphModel.prototype, {
      * *always* be one graph that is currently available.
      */
     getNameOfCurrentlySelectedGraph: function () {
-        // TODO
         return this.selectedGraphName;
     },
 
@@ -204,7 +196,6 @@ _.extend(GraphModel.prototype, {
      * @param graphName
      */
     selectGraph: function (graphName) {
-        // TODO
         if (this.graphNameList.indexOf(graphName) == -1) {
             console.log("Graph name was not in graph List???");
 
