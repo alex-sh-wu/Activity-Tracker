@@ -4,11 +4,26 @@ const energyColor = '#FAA43A';
 const stressColor = '#F15854';
 const happinessColor = '#5DA5DA';
 
+const activity1Color = '#EC4401';
+const activity2Color = '#CC9B25';
+const activity3Color = '#13CD4A';
+const activity4Color = '#7B6ED6';
+const activity5Color = '#5E525C';
+
+const metric1 = 'Energy';
+const metric2 = 'Stress';
+const metric3 = 'Happiness';
+
+const legendFont = '16px Arial';
+const fontColor = 'black';
+
+const axisColor = 'black';
+
 function getLastUpdateTime(newTime) {
     let date = null;
     if (newTime != null) {
         date = new Date(newTime);
-        //document.getElementById('last_entry').innerHTML = "<em> Last Data Entry: " + date.toLocaleTimeString() + " , " + date.toDateString() + "</em>";
+        document.getElementById('last_entry').innerHTML = "<em> Last Data Entry: " + date.toLocaleTimeString() + " , " + date.toDateString() + "</em>";
     }
 }
 
@@ -55,17 +70,22 @@ function renderTableSummary (tableElement, dataModel) {
     }
 }
 
-function updateGraphs(graphModel, graphName, tableSummary, graphSummary, entriesComparison, activityAverages) {
+function updateGraphs(graphModel, graphName, tableSummary, graphSummary, entriesComparison, activityAverages, timeSpent) {
     if (graphName.valueOf() == graphModel.getAvailableGraphNames()[0].valueOf()) {
         showTableSummary(tableSummary, graphSummary);
     }
     //Entry by Entry
     else if (graphName.valueOf() == graphModel.getAvailableGraphNames()[1].valueOf()) {
-        showEntries(tableSummary, graphSummary, entriesComparison, activityAverages);
+        showEntries(tableSummary, graphSummary, entriesComparison, activityAverages, timeSpent);
     }
     //Averages
     else if (graphName.valueOf() == graphModel.getAvailableGraphNames()[2].valueOf()) {
-        showActivityAverages(tableSummary, graphSummary, entriesComparison, activityAverages);
+        showActivityAverages(tableSummary, graphSummary, entriesComparison, activityAverages, timeSpent);
+    }
+
+    //Pie chart
+    else if (graphName.valueOf() == graphModel.getAvailableGraphNames()[3].valueOf()) {
+        showPieChart(tableSummary, graphSummary, entriesComparison, activityAverages, timeSpent);
     }
 }
 
@@ -74,74 +94,29 @@ function showTableSummary(tableSummary, graphSummary) {
     graphSummary.style.display = 'none';
 }
 
-function showEntries(tableSummary, graphSummary, entriesComparison, activityAverages) {
+function showEntries(tableSummary, graphSummary, entriesComparison, activityAverages, pieChart) {
     tableSummary.style.display = 'none';
     graphSummary.style.display = 'table';
     entriesComparison.style.display = 'block';
     activityAverages.style.display = 'none';
+    pieChart.style.display = 'none';
 }
 
-function showActivityAverages(tableSummary, graphSummary, entriesComparison, activityAverages) {
+function showActivityAverages(tableSummary, graphSummary, entriesComparison, activityAverages, pieChart) {
     tableSummary.style.display = 'none';
     graphSummary.style.display = 'table';
     entriesComparison.style.display = 'none';
     activityAverages.style.display = 'block';
+    pieChart.style.display = 'none';
 }
 
-/*
-function responsivefy(svg) {
-    // get container + svg aspect ratio
-    let container = d3.select(svg.node().parentNode),
-        width = parseInt(svg.style("width")),
-        height = parseInt(svg.style("height")),
-        aspect = width / height;
-
-    // add viewBox and preserveAspectRatio properties,
-    // and call resize so that svg resizes on inital page load
-    svg.attr("viewBox", "0 0 " + width + " " + height)
-        .attr("perserveAspectRatio", "xMinYMid")
-        .call(resize);
-
-    // to register multiple listeners for same event type, 
-    // you need to add namespace, i.e., 'click.foo'
-    // necessary if you call invoke this function for multiple svgs
-    // api docs: https://github.com/mbostock/d3/wiki/Selections#on
-    d3.select(window).on("resize." + container.attr("id"), resize);
-
-    // get width of container and resize svg to fit it
-    function resize() {
-        let targetWidth = parseInt(container.style("width"));
-        svg.attr("width", targetWidth);
-        svg.attr("height", Math.round(targetWidth / aspect));
-    }
+function showPieChart(tableSummary, graphSummary, entriesComparison, activityAverages, pieChart) {
+    tableSummary.style.display = 'none';
+    graphSummary.style.display = 'table';
+    entriesComparison.style.display = 'none';
+    activityAverages.style.display = 'none';
+    pieChart.style.display = 'block';
 }
-
-function renderScatterPlot () {
-    let svg = d3.select("#scatter_plot_container")
-        .append("div")
-        .append("svg")
-        .attr("width", 960)
-        .attr("height", 500)
-        .call(responsivefy);
-
-    let dataSet = [
-                            [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
-                            [410, 12], [475, 44], [25, 67], [85, 21], [220, 88]
-                          ];
-
-    svg.selectAll("circle")
-        .data(dataSet)
-        .enter()
-        .append("circle")
-        .attr("cx", function(d) {
-            return d[0];
-        })
-        .attr("cy", function(d) {
-            return d[1];
-        })
-        .attr("r", 5);
-}
-*/
 
 /**
  * This function can live outside the window load event handler, because it is
@@ -171,35 +146,34 @@ function renderActivityAverages(canvas, dataModel) {
 
     //Set up graph axis
     context.font = "25px Arial";
-    context.fillStyle = 'black';
+    context.fillStyle = fontColor;
     context.textAlign = 'center';
     context.fillText("Activity Averages", canvas.width / 2, 30);
     //YAxis Label
     context.save();
     context.translate(leftMargin / 3, (height + bottomMargin) / 2);
     context.rotate(-0.5 * Math.PI);
-    context.fillStyle = 'black';
+    context.fillStyle = fontColor;
     context.font = "25px Arial";
     context.fillText("Level", 0, 0);
     context.restore();
 
     //Y Axis
-    context.strokeStyle = 'black';
+    context.strokeStyle = axisColor;
     context.moveTo(leftMargin, maxBarHeight * 2);
     context.lineTo(leftMargin, canvas.height - bottomMargin - labelMargin);
     context.stroke();
 
-    let i;
     //Y Axis data Points
-    for (i = heightDivider - maxYValue; i <= heightDivider - 1; i++) {
+    for (let i = heightDivider - maxYValue; i <= heightDivider - 1; i++) {
         context.font = "16px Arial";
-        context.fillStyle = 'black';
+        context.fillStyle = fontColor;
         context.fillText("" + (heightDivider - i), leftMargin / 1.25, (maxBarHeight * i) + 3);
         context.fillRect(leftMargin, (maxBarHeight * i), -5, 2);
     }
     //Xaxis Label
     context.font = "25px Arial";
-    context.fillStyle = 'black';
+    context.fillStyle = fontColor;
     context.textAlign = 'center';
     context.fillText("Activity", canvas.width / 2, canvas.height - labelMargin / 4);
 
@@ -209,12 +183,12 @@ function renderActivityAverages(canvas, dataModel) {
     context.stroke();
 
     //Legend
-    context.font = "14px Arial";
-    context.fillStyle = 'black';
+    context.font = legendFont;
+    context.fillStyle = fontColor;
     context.textAlign = 'center';
-    context.fillText("Energy", canvas.width - leftMargin, 30);
-    context.fillText("Stress", canvas.width - leftMargin, 50);
-    context.fillText("Happiness", canvas.width - leftMargin, 70);
+    context.fillText(metric1, canvas.width - leftMargin, 30);
+    context.fillText(metric2, canvas.width - leftMargin, 50);
+    context.fillText(metric3, canvas.width - leftMargin, 70);
 
     context.fillStyle = energyColor;
     context.fillRect(canvas.width - leftMargin * 2, 20, 10, 10);
@@ -234,7 +208,7 @@ function renderActivityAverages(canvas, dataModel) {
         context.save();
         context.translate(x + groupBarWidth / 2, height + bottomMargin / 2);
         context.rotate(-0.5 * Math.PI);
-        context.fillStyle = 'black';
+        context.fillStyle = fontColor;
         context.font = "18px Arial";
         context.fillText(activityName, 0, 0, bottomMargin - labelMargin);
         context.restore();
@@ -292,7 +266,7 @@ function renderEntryByEntryComparison(canvas, dataModel) {
 
     //Set up graph axis
     context.font = "25px Arial";
-    context.fillStyle = 'black';
+    context.fillStyle = fontColor;
     context.textAlign = 'center';
     context.fillText("Entry By Entry Comparison", canvas.width / 2, 30);
 
@@ -300,21 +274,21 @@ function renderEntryByEntryComparison(canvas, dataModel) {
     context.save();
     context.translate(leftMargin / 3, (height + bottomMargin) / 2);
     context.rotate(-0.5 * Math.PI);
-    context.fillStyle = 'black';
+    context.fillStyle = fontColor;
     context.font = "25px Arial";
     context.fillText("Level", 0, 0);
     context.restore();
 
 
     //Y Axis
-    context.strokeStyle = 'black';
+    context.strokeStyle = axisColor;
     context.moveTo(leftMargin, maxBarHeight * 2);
     context.lineTo(leftMargin, canvas.height - bottomMargin - labelMargin);
     context.stroke();
 
     //XAxis Label
     context.font = "25px Arial";
-    context.fillStyle = 'black';
+    context.fillStyle = fontColor;
     context.textAlign = 'center';
     context.fillText("Entry - Activity", canvas.width / 2, canvas.height - labelMargin / 4);
 
@@ -325,12 +299,12 @@ function renderEntryByEntryComparison(canvas, dataModel) {
 
 
     //Legend
-    context.font = "14px Arial";
-    context.fillStyle = 'black';
+    context.font = legendFont;
+    context.fillStyle = fontColor;
     context.textAlign = 'center';
-    context.fillText("Energy", canvas.width - leftMargin, 30);
-    context.fillText("Stress", canvas.width - leftMargin, 50);
-    context.fillText("Happiness", canvas.width - leftMargin, 70);
+    context.fillText(metric1, canvas.width - leftMargin, 30);
+    context.fillText(metric2, canvas.width - leftMargin, 50);
+    context.fillText(metric3, canvas.width - leftMargin, 70);
 
     context.fillStyle = energyColor;
     context.fillRect(canvas.width - leftMargin * 2, 20, 10, 10);
@@ -339,12 +313,10 @@ function renderEntryByEntryComparison(canvas, dataModel) {
     context.fillStyle = happinessColor;
     context.fillRect(canvas.width - leftMargin * 2, 60, 10, 10);
 
-
-    let i;
     //Y Axis data Points
-    for (i = heightDivider - maxYValue; i <= heightDivider - 1; i++) {
+    for (let i = heightDivider - maxYValue; i <= heightDivider - 1; i++) {
         context.font = "16px Arial";
-        context.fillStyle = 'black';
+        context.fillStyle = fontColor;
         context.fillText("" + (heightDivider - i), leftMargin / 1.25, (maxBarHeight * i) + 3);
         context.fillRect(leftMargin, (maxBarHeight * i), -5, 2);
     }
@@ -356,7 +328,7 @@ function renderEntryByEntryComparison(canvas, dataModel) {
         context.save();
         context.translate(x + groupBarWidth / 2, height + bottomMargin / 2);
         context.rotate(-0.5 * Math.PI);
-        context.fillStyle = 'black';
+        context.fillStyle = fontColor;
         context.font = " 18px Arial";
         context.fillText(index + 1 + " - " + dataPoint.activityType, 0, 0, bottomMargin - labelMargin);
         context.restore();
@@ -375,3 +347,75 @@ function renderEntryByEntryComparison(canvas, dataModel) {
         index += 1;
     });
 }
+
+function renderTimeSpent(canvas, dataModel) {
+    //algorithm borrowed from https://stackoverflow.com/questions/6995797/html5-canvas-pie-chart
+    let context = canvas.getContext('2d');
+    let horizontalSpacing = 10;
+    let leftMargin = 75;
+    let labelMargin = 25;
+    canvas.width = screen.availWidth / 1.25 + leftMargin;
+    canvas.height = screen.availHeight / 1.25;
+    let bottomMargin = screen.availHeight - canvas.height;
+    let heightDivider = 7;
+    let maxYValue = 5;
+
+    let width = canvas.width - leftMargin;
+    let height = canvas.height - bottomMargin - labelMargin;
+
+    let dataPoints = dataModel.getActivityDataPoints();
+
+    let activity1DataPoints = _.filter(dataPoints, (element) => { return element["activityType"] === dataModel.trackedActivitiesList[0]; } );
+    let activity2DataPoints = _.filter(dataPoints, (element) => { return element["activityType"] === dataModel.trackedActivitiesList[1]; } );
+    let activity3DataPoints = _.filter(dataPoints, (element) => { return element["activityType"] === dataModel.trackedActivitiesList[2]; } );
+    let activity4DataPoints = _.filter(dataPoints, (element) => { return element["activityType"] === dataModel.trackedActivitiesList[3]; } );
+    let activity5DataPoints = _.filter(dataPoints, (element) => { return element["activityType"] === dataModel.trackedActivitiesList[4]; } );
+
+
+    //Legend
+    context.font = legendFont;
+    context.fillStyle = fontColor;
+    context.textAlign = 'left';
+    context.fillText(dataModel.trackedActivitiesList[0], canvas.width - leftMargin - 80, 30);
+    context.fillText(dataModel.trackedActivitiesList[1], canvas.width - leftMargin - 80, 50);
+    context.fillText(dataModel.trackedActivitiesList[2], canvas.width - leftMargin - 80, 70);
+    context.fillText(dataModel.trackedActivitiesList[3], canvas.width - leftMargin - 80, 90);
+    context.fillText(dataModel.trackedActivitiesList[4], canvas.width - leftMargin - 80, 110);
+
+    context.fillStyle = activity1Color;
+    context.fillRect(canvas.width - leftMargin * 2 - 40, 20, 10, 10);
+    context.fillStyle = activity2Color;
+    context.fillRect(canvas.width - leftMargin * 2 - 40, 40, 10, 10);
+    context.fillStyle = activity3Color;
+    context.fillRect(canvas.width - leftMargin * 2 - 40, 60, 10, 10);
+    context.fillStyle = activity4Color;
+    context.fillRect(canvas.width - leftMargin * 2 - 40, 80, 10, 10);
+    context.fillStyle = activity5Color;
+    context.fillRect(canvas.width - leftMargin * 2 - 40, 100, 10, 10);
+
+    let lastAngle = 0;
+    let aggregatedData = [
+                _.reduce(activity1DataPoints, (memo, element) => { return memo + element["activityDurationInMinutes"]}, 0),
+                _.reduce(activity2DataPoints, (memo, element) => { return memo + element["activityDurationInMinutes"]}, 0),
+                _.reduce(activity3DataPoints, (memo, element) => { return memo + element["activityDurationInMinutes"]}, 0),
+                _.reduce(activity4DataPoints, (memo, element) => { return memo + element["activityDurationInMinutes"]}, 0),
+                _.reduce(activity5DataPoints, (memo, element) => { return memo + element["activityDurationInMinutes"]}, 0)
+                ];
+    let totalMinutes = 0;
+    let colors = [activity1Color, activity2Color, activity3Color, activity4Color, activity5Color];
+
+    for (let i = 0; i < aggregatedData.length; i++) {
+        totalMinutes += aggregatedData[i];
+    }
+
+    for (let i = 0; i < aggregatedData.length; i++) {
+        context.fillStyle = colors[i];
+        context.beginPath();
+        context.moveTo(canvas.width/2, canvas.height/2);
+        context.arc(canvas.width/2, canvas.height/2, canvas.height/2, lastAngle, lastAngle+(Math.PI*2*(aggregatedData[i]/totalMinutes)), false);
+        context.lineTo(canvas.width/2, canvas.height/2);
+        context.fill();
+        lastAngle += Math.PI * 2 * (aggregatedData[i]/totalMinutes);
+    }
+}
+

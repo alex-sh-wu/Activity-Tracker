@@ -9,7 +9,7 @@ window.addEventListener('load', () => {
     graphModel = new GraphModel();
 
     let storedData = window.localStorage.getItem(STORAGE_KEY_DATA_POINTS);
-    let storedLastUpdateTime = window.localStorage.getItem(STORAGE_KEY_LAST_DATA_ENTRY_TIME);
+    let storedLastUpdateTime = parseInt(window.localStorage.getItem(STORAGE_KEY_LAST_DATA_ENTRY_TIME));
     getLastUpdateTime(storedLastUpdateTime);
     if (storedData != null) {
         dataModel.dataPointList = JSON.parse(storedData);
@@ -21,11 +21,13 @@ window.addEventListener('load', () => {
     let graphSummary = document.getElementById('graph_summary');
     let entriesComparison = document.getElementById('entries_graph');
     let activityAverages = document.getElementById('bar_graph');
+    let timeSpent = document.getElementById('pie_chart');
     let tableContainer = document.getElementById('activity_table_container');
 
     analyzeDiv.style.display = 'none';
     activityAverages.style.display = 'none';
     entriesComparison.style.display = 'none';
+    timeSpent.style.display = 'none';
 
     document.getElementById('sidebar_track').addEventListener('click', () => {
         trackDiv.style.display = 'block';
@@ -49,14 +51,20 @@ window.addEventListener('load', () => {
         graphModel.selectGraph(graphModel.getAvailableGraphNames()[2]);
     });
 
+    document.getElementById('time_spent_button').addEventListener('click', () => {
+        graphModel.selectGraph(graphModel.getAvailableGraphNames()[3]);
+    });
+
     dataModel.addListener((eventType, eventTime, activityData) => {
         renderTableSummary(tableContainer, dataModel);
         renderActivityAverages(activityAverages, dataModel);
         renderEntryByEntryComparison(entriesComparison, dataModel);
+        renderTimeSpent(timeSpent, dataModel);
+        getLastUpdateTime(eventTime);
     });
 
     graphModel.addListener((eventType, eventTime, graphName) => {
-        updateGraphs(graphModel, graphName, tableSummary, graphSummary, entriesComparison, activityAverages);
+        updateGraphs(graphModel, graphName, tableSummary, graphSummary, entriesComparison, activityAverages, timeSpent);
     })
 
     
@@ -99,4 +107,5 @@ window.addEventListener('load', () => {
     renderTableSummary(tableContainer, dataModel);
     renderActivityAverages(activityAverages, dataModel);
     renderEntryByEntryComparison(entriesComparison, dataModel);
+    renderTimeSpent(timeSpent, dataModel);
 });

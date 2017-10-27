@@ -151,7 +151,7 @@ _.extend(ActivityStoreModel.prototype, {
  */
 let GraphModel = function () {
     this.listenerList = [];
-    this.graphNameList = ["TableSummary", "EntryByEntry", "Averages"];
+    this.graphNameList = ["TableSummary", "EntryByEntry", "Averages", "Time Spent"];
     this.selectedGraphName = "TableSummary";
 };
 
